@@ -9,16 +9,7 @@ const resolve = (filePath) => path.resolve(filePath)
 
 const renderToString = async(url) => {
     const { default: App } = await vite.ssrLoadModule('/src/app.vue')
-    const { createRouter } = await vite.ssrLoadModule('/src/router.ts')
-
     const app = createSSRApp(App)
-    const router = createRouter()
-
-    app.use(router)
-
-    router.push(url)
-    await router.isReady()
-
     const html = await _renderToString(app, {})
 
     return { html }
